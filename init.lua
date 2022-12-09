@@ -161,11 +161,15 @@ nvim_lsp["sumneko_lua"].setup{
 nvim_lsp["eslint"].setup{
     on_attach = on_attach,
 }
+nvim_lsp["zls"].setup{
+    on_attach = on_attach,
+}
 
 local null_ls = require("null-ls")
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 local sources = {
     null_ls.builtins.formatting.prettierd,
+    null_ls.builtins.formatting.rustfmt,
 }
 null_ls.setup({
     on_attach = function(client, bufnr)
