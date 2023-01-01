@@ -168,7 +168,9 @@ nvim_lsp["zls"].setup{
 local null_ls = require("null-ls")
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 local sources = {
-    null_ls.builtins.formatting.prettierd,
+    null_ls.builtins.formatting.prettierd.with({
+        disabled_filetypes = { "markdown" },
+    }),
     null_ls.builtins.formatting.rustfmt,
 }
 null_ls.setup({
