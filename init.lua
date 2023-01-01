@@ -164,6 +164,9 @@ nvim_lsp["eslint"].setup{
 nvim_lsp["zls"].setup{
     on_attach = on_attach,
 }
+nvim_lsp["pyright"].setup{
+    on_attach = on_attach,
+}
 
 local null_ls = require("null-ls")
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
