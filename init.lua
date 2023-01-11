@@ -78,12 +78,31 @@ require'packer'.startup(function()
         end,
     }
     use'simeji/winresizer'
+    use "rebelot/kanagawa.nvim"
+    use { 'bluz71/vim-moonfly-colors', branch = 'cterm-compat' }
+    use "EdenEast/nightfox.nvim"
+    use({
+      "folke/noice.nvim",
+      config = function()
+        require("noice").setup({
+            -- add any options here
+        })
+      end,
+      requires = {
+        -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+        "MunifTanjim/nui.nvim",
+        -- OPTIONAL:
+        --   `nvim-notify` is only needed, if you want to use the notification view.
+        --   If not available, we use `mini` as the fallback
+        "rcarriga/nvim-notify",
+        }
+    })
 end)
 
 require('indent_blankline').setup {
     show_end_of_line = true,
 }
-vim.cmd 'colorscheme OceanicNext'
+vim.cmd 'colorscheme nightfox'
 
 require('telescope').setup({
  defaults = {
@@ -213,6 +232,25 @@ cmp.setup({
   }),
   experimental = {
     ghost_text = true,
+  },
+})
+
+require("noice").setup({
+  lsp = {
+    -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+    override = {
+      ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+      ["vim.lsp.util.stylize_markdown"] = true,
+      ["cmp.entry.get_documentation"] = true,
+    },
+  },
+  -- you can enable a preset for easier configuration
+  presets = {
+    bottom_search = true, -- use a classic bottom cmdline for search
+    command_palette = true, -- position the cmdline and popupmenu together
+    long_message_to_split = true, -- long messages will be sent to a split
+    inc_rename = false, -- enables an input dialog for inc-rename.nvim
+    lsp_doc_border = false, -- add a border to hover docs and signature help
   },
 })
 
