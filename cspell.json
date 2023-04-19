@@ -1,5 +1,5 @@
 {
-  "allowCompoundWord": true,
+  "allowCompoundWords": true,
   "dictionaries": ["lua", "custom-words"],
   "dictionaryDefinitions": [
     {
