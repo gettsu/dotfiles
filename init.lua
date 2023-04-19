@@ -81,6 +81,8 @@ require'packer'.startup(function()
     use "rebelot/kanagawa.nvim"
     use { 'bluz71/vim-moonfly-colors', branch = 'cterm-compat' }
     use "EdenEast/nightfox.nvim"
+    --[[
+    use "github/copilot.vim"
     use({
       "folke/noice.nvim",
       config = function()
@@ -97,12 +99,13 @@ require'packer'.startup(function()
         "rcarriga/nvim-notify",
         }
     })
+    --]]
 end)
 
 require('indent_blankline').setup {
     show_end_of_line = true,
 }
-vim.cmd 'colorscheme nightfox'
+vim.cmd 'colorscheme kanagawa'
 
 require('telescope').setup({
  defaults = {
@@ -194,6 +197,16 @@ local sources = {
         disabled_filetypes = { "markdown" },
     }),
     null_ls.builtins.formatting.rustfmt,
+    null_ls.builtins.diagnostics.cspell.with({
+        diagnostics_postprocess = function(diagnostic)
+            diagnostic.severity = vim.diagnostic.severity["WARN"]
+        end,
+        condition = function()
+            return vim.fn.executable("cspell") > 0
+        end,
+        extra_args = { "--config", "~/.config/cspell/cspell.json"}
+    })
+    -- null_ls.builtins.formatting.clang_format,
 }
 null_ls.setup({
     on_attach = function(client, bufnr)
@@ -235,6 +248,7 @@ cmp.setup({
   },
 })
 
+--[[
 require("noice").setup({
   lsp = {
     -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
@@ -253,6 +267,7 @@ require("noice").setup({
     lsp_doc_border = false, -- add a border to hover docs and signature help
   },
 })
+--]]
 
 require('nvim-treesitter.configs').setup {
   highlight = {
