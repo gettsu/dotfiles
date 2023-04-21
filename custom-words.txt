@@ -2,3 +2,8 @@ vim
 nvim
 packer
 cmdline
+riscv
+x86
+virt
+uart
+bootloader
