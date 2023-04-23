@@ -159,36 +159,27 @@ require("mason").setup({
 require("mason-lspconfig").setup()
 
 local nvim_lsp = require('lspconfig')
-nvim_lsp["gopls"].setup{
-    on_attach = on_attach,
+
+local lsp_list = {
+    "gopls",
+    "pyright",
+    "dockerls",
+    "rust_analyzer",
+    "clangd",
+    "texlab",
+    "tsserver",
+    "lua_ls",
+    "texlab",
+    "eslint",
+    "zls",
+    "docker_compose_language_service",
 }
-nvim_lsp["rust_analyzer"].setup{
-    on_attach = on_attach,
-}
-nvim_lsp["dockerls"].setup{
-    on_attach = on_attach,
-}
-nvim_lsp["clangd"].setup{
-    on_attach = on_attach,
-}
-nvim_lsp["texlab"].setup{
-    on_attach = on_attach,
-}
-nvim_lsp["tsserver"].setup{
-    on_attach = on_attach,
-}
-nvim_lsp["lua_ls"].setup{
-    on_attach = on_attach,
-}
-nvim_lsp["eslint"].setup{
-    on_attach = on_attach,
-}
-nvim_lsp["zls"].setup{
-    on_attach = on_attach,
-}
-nvim_lsp["pyright"].setup{
-    on_attach = on_attach,
-}
+
+for _, v in pairs(lsp_list) do
+    nvim_lsp[v].setup{
+        on_attach = on_attach,
+    }
+end
 
 local null_ls = require("null-ls")
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
