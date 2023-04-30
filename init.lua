@@ -196,8 +196,8 @@ local sources = {
             return vim.fn.executable("cspell") > 0
         end,
         extra_args = { "--config", "~/.config/cspell/cspell.json"}
-    })
-    -- null_ls.builtins.formatting.clang_format,
+    }),
+    null_ls.builtins.formatting.clang_format,
 }
 null_ls.setup({
     on_attach = function(client, bufnr)
