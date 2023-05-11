@@ -8,3 +8,4 @@ virt
 uart
 bootloader
 SIMD
+wezterm
