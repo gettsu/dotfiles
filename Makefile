@@ -7,6 +7,7 @@ all:
 	- ln -s ~/dotfiles/.tmux.conf ~/.tmux.conf
 	- ln -s ~/dotfiles/i3-config ~/.config/i3/config
 	- ln -s ~/dotfiles/.fehbg ~/.fehbg
+	- ln -s ~/dotfiles/.zshrc-basic ~/.zshrc
 
 install-dep:
 	sudo pacman -S $(DEPS)
