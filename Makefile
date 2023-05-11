@@ -1,4 +1,4 @@
-DEPS := neovim wezterm tmux i3 picom fcitx5 feh archlinux-wallpaper
+DEPS := neovim wezterm tmux i3 picom fcitx5 feh archlinux-wallpaper zsh pyenv
 all:
 	- ln -s ~/dotfiles/init.lua ~/.config/nvim/init.lua
 	- ln -s ~/dotfiles/wezterm.lua ~/.config/wezterm/wezterm.lua
