@@ -173,6 +173,7 @@ local lsp_list = {
     "eslint",
     "zls",
     "docker_compose_language_service",
+    "jdtls",
 }
 
 for _, v in pairs(lsp_list) do
