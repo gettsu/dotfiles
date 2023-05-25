@@ -8,7 +8,6 @@ local options = {
     expandtab = true,
     autoindent = true,
     termguicolors = true,
-    mouse = "",
 }
 
 vim.opt.shortmess:append("c")
