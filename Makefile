@@ -10,6 +10,9 @@ all:
 	- ln -s ~/dotfiles/.fehbg ~/.fehbg
 	- ln -s ~/dotfiles/.zshrc-basic ~/.zshrc
 
+setup-keyboard:
+	sudo cp ~/dotfiles/00-keyboard.conf /etc/X11/xorg.conf.d/00-keyboard.conf
+
 install-dep:
 	sudo pacman -S $(DEPS)
 
