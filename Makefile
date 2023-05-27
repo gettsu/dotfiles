@@ -17,13 +17,13 @@ set-links: ## Set symbolic link
 	-@ ln -s ~/dotfiles/.fehbg ~/.fehbg
 	-@ ln -s ~/dotfiles/.zshrc-basic ~/.zshrc
 
-setup-keyboard: ## setup keyboard
+setup-keyboard: ## Setup keyboard
 	sudo cp ~/dotfiles/00-keyboard.conf /etc/X11/xorg.conf.d/00-keyboard.conf
 
-install-deps: ## install dependencies
+install-deps: ## Install dependencies
 	sudo pacman -S $(DEPS)
 
-gen-dirs: ## generate directories
+gen-dirs: ## Generate directories
 	-@ mkdir ~/.config/nvim
 	-@ mkdir ~/.config/wezterm
 	-@ mkdir ~/.config/alacritty
