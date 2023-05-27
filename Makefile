@@ -1,25 +1,32 @@
+.PHONY: help setup-keyboard install-deps gen-dirs
 DEPS := neovim wezterm tmux i3 picom fcitx5 feh archlinux-wallpaper zsh pyenv
-all:
-	- ln -s ~/dotfiles/init.lua ~/.config/nvim/init.lua
-	- ln -s ~/dotfiles/wezterm.lua ~/.config/wezterm/wezterm.lua
-	- ln -s ~/dotfiles/cspell.json ~/.config/cspell/cspell.json
-	- ln -s ~/dotfiles/alacritty.yml ~/.config/alacritty/alacritty.yml
-	- ln -s ~/dotfiles/custom-words.txt ~/.local/share/cspell/custom-words.txt
-	- ln -s ~/dotfiles/.tmux.conf ~/.tmux.conf
-	- ln -s ~/dotfiles/i3-config ~/.config/i3/config
-	- ln -s ~/dotfiles/.fehbg ~/.fehbg
-	- ln -s ~/dotfiles/.zshrc-basic ~/.zshrc
+.DEFAULT_GOAL := help
 
-setup-keyboard:
+help: ## Show options
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
+		awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
+
+set-links: ## Set symbolic link
+	-@ ln -s ~/dotfiles/init.lua ~/.config/nvim/init.lua
+	-@ ln -s ~/dotfiles/wezterm.lua ~/.config/wezterm/wezterm.lua
+	-@ ln -s ~/dotfiles/cspell.json ~/.config/cspell/cspell.json
+	-@ ln -s ~/dotfiles/alacritty.yml ~/.config/alacritty/alacritty.yml
+	-@ ln -s ~/dotfiles/custom-words.txt ~/.local/share/cspell/custom-words.txt
+	-@ ln -s ~/dotfiles/.tmux.conf ~/.tmux.conf
+	-@ ln -s ~/dotfiles/i3-config ~/.config/i3/config
+	-@ ln -s ~/dotfiles/.fehbg ~/.fehbg
+	-@ ln -s ~/dotfiles/.zshrc-basic ~/.zshrc
+
+setup-keyboard: ## setup keyboard
 	sudo cp ~/dotfiles/00-keyboard.conf /etc/X11/xorg.conf.d/00-keyboard.conf
 
-install-dep:
+install-deps: ## install dependencies
 	sudo pacman -S $(DEPS)
 
-gen-dirs:
-	- mkdir ~/.config/nvim
-	- mkdir ~/.config/wezterm
-	- mkdir ~/.config/alacritty
-	- mkdir ~/.config/cspell
-	- mkdir ~/.local/share/cspell
-	- mkdir ~/.config/i3
+gen-dirs: ## generate directories
+	-@ mkdir ~/.config/nvim
+	-@ mkdir ~/.config/wezterm
+	-@ mkdir ~/.config/alacritty
+	-@ mkdir ~/.config/cspell
+	-@ mkdir ~/.local/share/cspell
+	-@ mkdir ~/.config/i3
