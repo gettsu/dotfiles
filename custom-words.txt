@@ -9,3 +9,7 @@ uart
 bootloader
 SIMD
 wezterm
+clif
+wasi
+wasm
+gettsu
