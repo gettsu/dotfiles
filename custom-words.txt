@@ -13,3 +13,4 @@ clif
 wasi
 wasm
 gettsu
+DIFT
