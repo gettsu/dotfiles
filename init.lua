@@ -44,63 +44,67 @@ keymap("n", "<CR><CR>", "<C-w><C-w>", opts)
 
 vim.cmd[[packadd packer.nvim]]
 vim.cmd[[autocmd BufWritePost plugins.lua PackerCompile]]
-require'packer'.startup(function()
-    use 'wbthomason/packer.nvim'
-    use({
-        "iamcco/markdown-preview.nvim",
-        run = function() vim.fn["mkdp#util#install"]() end,
-    })
-    use'lukas-reineke/indent-blankline.nvim'
-    use'nvim-lua/plenary.nvim'
-    use {
-      'nvim-telescope/telescope.nvim', tag = '0.1.0',
-      requires = { {'nvim-lua/plenary.nvim'} }
-    }
-    use'mhartington/oceanic-next'
-    use'airblade/vim-gitgutter'
-    use'neovim/nvim-lspconfig'
-    use'williamboman/mason.nvim'
-    use'williamboman/mason-lspconfig.nvim'
-    use'hrsh7th/cmp-nvim-lsp'
-    use'hrsh7th/cmp-buffer'
-    use'hrsh7th/cmp-path'
-    use'hrsh7th/cmp-cmdline'
-    use'hrsh7th/nvim-cmp'
-    use'vim-airline/vim-airline'
-    use'vim-airline/vim-airline-themes'
-    use'jose-elias-alvarez/null-ls.nvim'
-    use {
-        'nvim-treesitter/nvim-treesitter',
-        run = function()
-            local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
-            ts_update()
-        end,
-    }
-    use'simeji/winresizer'
-    use "rebelot/kanagawa.nvim"
-    use { 'bluz71/vim-moonfly-colors', branch = 'cterm-compat' }
-    use "EdenEast/nightfox.nvim"
-    --[[
-    use "github/copilot.vim"
-    use({
-      "folke/noice.nvim",
-      config = function()
-        require("noice").setup({
-            -- add any options here
-        })
-      end,
-      requires = {
-        -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-        "MunifTanjim/nui.nvim",
-        -- OPTIONAL:
-        --   `nvim-notify` is only needed, if you want to use the notification view.
-        --   If not available, we use `mini` as the fallback
-        "rcarriga/nvim-notify",
-        }
-    })
-    --]]
-end)
 
+if vim.g.vscode then
+else
+    require'packer'.startup(function()
+        use 'wbthomason/packer.nvim'
+        use({
+            "iamcco/markdown-preview.nvim",
+            run = function() vim.fn["mkdp#util#install"]() end,
+        })
+        use'lukas-reineke/indent-blankline.nvim'
+        use'nvim-lua/plenary.nvim'
+        use {
+          'nvim-telescope/telescope.nvim', tag = '0.1.0',
+          requires = { {'nvim-lua/plenary.nvim'} }
+        }
+        use'airblade/vim-gitgutter'
+        use'mhartington/oceanic-next'
+        use'neovim/nvim-lspconfig'
+        use'williamboman/mason.nvim'
+        use'williamboman/mason-lspconfig.nvim'
+        use'hrsh7th/cmp-nvim-lsp'
+        use'hrsh7th/cmp-buffer'
+        use'hrsh7th/cmp-path'
+        use'hrsh7th/cmp-cmdline'
+        use'hrsh7th/nvim-cmp'
+        use'vim-airline/vim-airline'
+        use'vim-airline/vim-airline-themes'
+        use'jose-elias-alvarez/null-ls.nvim'
+        use {
+            'nvim-treesitter/nvim-treesitter',
+            run = function()
+                local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+                ts_update()
+            end,
+        }
+        use'simeji/winresizer'
+        use "rebelot/kanagawa.nvim"
+        use { 'bluz71/vim-moonfly-colors', branch = 'cterm-compat' }
+        use "EdenEast/nightfox.nvim"
+        --[[
+        use "github/copilot.vim"
+        use({
+          "folke/noice.nvim",
+          config = function()
+            require("noice").setup({
+                -- add any options here
+            })
+          end,
+          requires = {
+            -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+            "MunifTanjim/nui.nvim",
+            -- OPTIONAL:
+            --   `nvim-notify` is only needed, if you want to use the notification view.
+            --   If not available, we use `mini` as the fallback
+            "rcarriga/nvim-notify",
+            }
+        })
+        --]]
+    end)
+
+<<<<<<< Updated upstream
 local highlight = {
     "CursorColumn",
     "Whitespace",
@@ -116,165 +120,166 @@ require("ibl").setup {
 
 vim.cmd 'colorscheme kanagawa'
 
-require('telescope').setup({
- defaults = {
-    layout_config = {
-          vertical = { width = 0.5 }
-    },
-  },
-})
-local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>f', builtin.find_files, {})
-vim.keymap.set('n', '<leader>r', builtin.live_grep, {})
-vim.keymap.set('n', '<leader>b', builtin.buffers, {})
-vim.keymap.set('n', '<leader>h', builtin.help_tags, {})
+    require('telescope').setup({
+     defaults = {
+        layout_config = {
+              vertical = { width = 0.5 }
+        },
+      },
+    })
+    local builtin = require('telescope.builtin')
+    vim.keymap.set('n', '<leader>f', builtin.find_files, {})
+    vim.keymap.set('n', '<leader>r', builtin.live_grep, {})
+    vim.keymap.set('n', '<leader>b', builtin.buffers, {})
+    vim.keymap.set('n', '<leader>h', builtin.help_tags, {})
 
-local on_attach = function(client, bufnr)
-  -- Enable completion triggered by <c-x><c-o>
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+    local on_attach = function(client, bufnr)
+      -- Enable completion triggered by <c-x><c-o>
+      vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-  -- Mappings.
-  local bufopts = { noremap=true, silent=true, buffer=bufnr }
-  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-  vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-  vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-  vim.keymap.set('n', '<space>wl', function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, bufopts)
-  vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
-  vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
-  vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
-  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-    -- Show diagnostics in a floating window
-  vim.keymap.set('n', 'gk', vim.diagnostic.open_float, b, bufopts)
-  -- vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
-end
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, { virtual_text = false }
-)
-require("mason").setup({
-    ui = {
-        icons = {
-            package_installed = "✓",
-            package_pending = "➜",
-            package_uninstalled = "✗"
+      -- Mappings.
+      local bufopts = { noremap=true, silent=true, buffer=bufnr }
+      vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+      vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+      vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+      vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+      vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+      vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+      vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+      vim.keymap.set('n', '<space>wl', function()
+        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+      end, bufopts)
+      vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
+      vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
+      vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+      vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+        -- Show diagnostics in a floating window
+      vim.keymap.set('n', 'gk', vim.diagnostic.open_float, b, bufopts)
+      -- vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+    end
+    vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+      vim.lsp.diagnostic.on_publish_diagnostics, { virtual_text = false }
+    )
+    require("mason").setup({
+        ui = {
+            icons = {
+                package_installed = "✓",
+                package_pending = "➜",
+                package_uninstalled = "✗"
+            }
         }
+    })
+    require("mason-lspconfig").setup()
+
+    local nvim_lsp = require('lspconfig')
+
+    local lsp_list = {
+        "gopls",
+        "pyright",
+        "dockerls",
+        "rust_analyzer",
+        "clangd",
+        "texlab",
+        "tsserver",
+        "lua_ls",
+        "texlab",
+        "eslint",
+        "zls",
+        "docker_compose_language_service",
+        "jdtls",
     }
-})
-require("mason-lspconfig").setup()
 
-local nvim_lsp = require('lspconfig')
+    for _, v in pairs(lsp_list) do
+        nvim_lsp[v].setup{
+            on_attach = on_attach,
+        }
+    end
 
-local lsp_list = {
-    "gopls",
-    "pyright",
-    "dockerls",
-    "rust_analyzer",
-    "clangd",
-    "texlab",
-    "tsserver",
-    "lua_ls",
-    "texlab",
-    "eslint",
-    "zls",
-    "docker_compose_language_service",
-    "jdtls",
-}
+    local null_ls = require("null-ls")
+    local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+    local sources = {
+        null_ls.builtins.formatting.prettierd.with({
+            disabled_filetypes = { "markdown" },
+        }),
+        null_ls.builtins.formatting.rustfmt,
+        null_ls.builtins.diagnostics.cspell.with({
+            diagnostics_postprocess = function(diagnostic)
+                diagnostic.severity = vim.diagnostic.severity["WARN"]
+            end,
+            condition = function()
+                return vim.fn.executable("cspell") > 0
+            end,
+            extra_args = { "--config", "~/.config/cspell/cspell.json"}
+        }),
+        null_ls.builtins.formatting.clang_format,
+    }
+    null_ls.setup({
+        on_attach = function(client, bufnr)
+                if client.supports_method("textDocument/formatting") then
+                    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+                    vim.api.nvim_create_autocmd("BufWritePre", {
+                        group = augroup,
+                        buffer = bufnr,
+                        callback = function()
+                            vim.lsp.buf.format({ bufnr = bufnr })
+                        end,
+                    })
+                end
+            end,
+        sources = sources,
+    })
 
-for _, v in pairs(lsp_list) do
-    nvim_lsp[v].setup{
-        on_attach = on_attach,
+    local cmp = require("cmp")
+    cmp.setup({
+      snippet = {
+        expand = function(args)
+          vim.fn["vsnip#anonymous"](args.body)
+        end,
+      },
+      sources = {
+        { name = "nvim_lsp" },
+        -- { name = "buffer" },
+        -- { name = "path" },
+      },
+      mapping = cmp.mapping.preset.insert({
+        ["<C-p>"] = cmp.mapping.select_prev_item(),
+        ["<C-n>"] = cmp.mapping.select_next_item(),
+        ['<C-l>'] = cmp.mapping.complete(),
+        ['<C-e>'] = cmp.mapping.abort(),
+        ["<CR>"] = cmp.mapping.confirm { select = true },
+      }),
+      experimental = {
+        ghost_text = true,
+      },
+    })
+
+    --[[
+    require("noice").setup({
+      lsp = {
+        -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+        override = {
+          ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+          ["vim.lsp.util.stylize_markdown"] = true,
+          ["cmp.entry.get_documentation"] = true,
+        },
+      },
+      -- you can enable a preset for easier configuration
+      presets = {
+        bottom_search = true, -- use a classic bottom cmdline for search
+        command_palette = true, -- position the cmdline and popupmenu together
+        long_message_to_split = true, -- long messages will be sent to a split
+        inc_rename = false, -- enables an input dialog for inc-rename.nvim
+        lsp_doc_border = false, -- add a border to hover docs and signature help
+      },
+    })
+    --]]
+
+    require('nvim-treesitter.configs').setup {
+      highlight = {
+        enable = true,
+        disable = {
+          'toml',
+        },
+      },
     }
 end
-
-local null_ls = require("null-ls")
-local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-local sources = {
-    null_ls.builtins.formatting.prettierd.with({
-        disabled_filetypes = { "markdown" },
-    }),
-    null_ls.builtins.formatting.rustfmt,
-    null_ls.builtins.diagnostics.cspell.with({
-        diagnostics_postprocess = function(diagnostic)
-            diagnostic.severity = vim.diagnostic.severity["WARN"]
-        end,
-        condition = function()
-            return vim.fn.executable("cspell") > 0
-        end,
-        extra_args = { "--config", "~/.config/cspell/cspell.json"}
-    }),
-    null_ls.builtins.formatting.clang_format,
-}
-null_ls.setup({
-    on_attach = function(client, bufnr)
-            if client.supports_method("textDocument/formatting") then
-                vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-                vim.api.nvim_create_autocmd("BufWritePre", {
-                    group = augroup,
-                    buffer = bufnr,
-                    callback = function()
-                        vim.lsp.buf.format({ bufnr = bufnr })
-                    end,
-                })
-            end
-        end,
-    sources = sources,
-})
-
-local cmp = require("cmp")
-cmp.setup({
-  snippet = {
-    expand = function(args)
-      vim.fn["vsnip#anonymous"](args.body)
-    end,
-  },
-  sources = {
-    { name = "nvim_lsp" },
-    -- { name = "buffer" },
-    -- { name = "path" },
-  },
-  mapping = cmp.mapping.preset.insert({
-    ["<C-p>"] = cmp.mapping.select_prev_item(),
-    ["<C-n>"] = cmp.mapping.select_next_item(),
-    ['<C-l>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.abort(),
-    ["<CR>"] = cmp.mapping.confirm { select = true },
-  }),
-  experimental = {
-    ghost_text = true,
-  },
-})
-
---[[
-require("noice").setup({
-  lsp = {
-    -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-    override = {
-      ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-      ["vim.lsp.util.stylize_markdown"] = true,
-      ["cmp.entry.get_documentation"] = true,
-    },
-  },
-  -- you can enable a preset for easier configuration
-  presets = {
-    bottom_search = true, -- use a classic bottom cmdline for search
-    command_palette = true, -- position the cmdline and popupmenu together
-    long_message_to_split = true, -- long messages will be sent to a split
-    inc_rename = false, -- enables an input dialog for inc-rename.nvim
-    lsp_doc_border = false, -- add a border to hover docs and signature help
-  },
-})
---]]
-
-require('nvim-treesitter.configs').setup {
-  highlight = {
-    enable = true,
-    disable = {
-      'toml',
-    },
-  },
-}
