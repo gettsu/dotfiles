@@ -54,7 +54,7 @@ keymap("n", "<Space>l", "$", opts)
 -- 窓の切り替え --
 keymap("n", "<CR><CR>", "<C-w><C-w>", opts)
 
-require("lazy").setup(
+require("lazy").setup({
 {
     "iamcco/markdown-preview.nvim",
     cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
@@ -66,8 +66,15 @@ require("lazy").setup(
 },
 {
     "neoclide/coc.nvim",
-    build = "yarn install --frozen-lockfile" }
-)
+    branch = "release"
+},
+{
+    "rebelot/kanagawa.nvim",
+}
+})
+
+vim.cmd "colorscheme kanagawa"
+
 local highlight = {
     "CursorColumn",
     "Whitespace",
