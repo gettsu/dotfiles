@@ -1,19 +1,30 @@
 {
-  "allowCompoundWords": true,
-  "dictionaries": ["lua", "custom-words"],
-  "dictionaryDefinitions": [
-    {
-      "name": "custom-words",
-      "path": "~/.local/share/cspell/custom-words.txt",
-      "addWords": true
-    }
-  ],
-  "languageSettings": [
-    {
-      "languageId": "lua",
-      "locale": "*",
-      "ignoreRegExpList": ["/require.*/"],
-      "dictionaries": ["lua"]
-    }
-  ]
+    "version": "0.1",
+    "allowCompoundWords": true,
+    "dictionaries": [
+        "lua",
+        "custom-words"
+    ],
+    "dictionaryDefinitions": [
+        {
+            "name": "custom-words",
+            "path": "~/.local/share/cspell/custom-words.txt",
+            "addWords": true
+        }
+    ],
+    "languageSettings": [
+        {
+            "languageId": "lua",
+            "locale": "*",
+            "ignoreRegExpList": [
+                "/require.*/"
+            ],
+            "dictionaries": [
+                "lua"
+            ]
+        }
+    ],
+    "words": [
+        "gopls"
+    ]
 }
