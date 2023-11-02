@@ -8,6 +8,7 @@ help: ## Show options
 
 set-links: ## Set symbolic link
 	-@ ln -s ~/dotfiles/init.lua ~/.config/nvim/init.lua
+	-@ ln -s ~/dotfiles/coc-settings.json ~/.config/nvim/coc-settings.json
 	-@ ln -s ~/dotfiles/wezterm.lua ~/.config/wezterm/wezterm.lua
 	-@ ln -s ~/dotfiles/cspell.json ~/.config/cspell/cspell.json
 	-@ ln -s ~/dotfiles/alacritty.yml ~/.config/alacritty/alacritty.yml
