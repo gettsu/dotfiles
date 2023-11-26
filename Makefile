@@ -17,6 +17,7 @@ set-links: ## Set symbolic link
 	-@ ln -s ~/dotfiles/i3-config ~/.config/i3/config
 	-@ ln -s ~/dotfiles/.fehbg ~/.fehbg
 	-@ ln -s ~/dotfiles/.zshrc-basic ~/.zshrc
+	-@ ln -s ~/dotfiles/foot.ini ~/.config/foot/foot.ini
 
 setup-keyboard: ## Setup keyboard
 	sudo cp ~/dotfiles/00-keyboard.conf /etc/X11/xorg.conf.d/00-keyboard.conf
@@ -31,3 +32,4 @@ gen-dirs: ## Generate directories
 	-@ mkdir ~/.config/cspell
 	-@ mkdir ~/.local/share/cspell
 	-@ mkdir ~/.config/i3
+	-@ mkdir ~/.config/foot
