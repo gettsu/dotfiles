@@ -1,0 +1,32 @@
+{
+    "terminal.integrated.fontFamily": "Cica, monospace",
+    "editor.inlineSuggest.enabled": true,
+    "github.copilot.enable": {
+        "*": true,
+        "plaintext": true,
+        "markdown": false,
+        "scminput": false
+    },
+    "workbench.colorTheme": "Default Dark+",
+    "go.toolsManagement.autoUpdate": true,
+    "editor.quickSuggestions": {
+        "other": "off"
+    },
+    "editor.acceptSuggestionOnEnter": "off",
+    "terminal.integrated.enableMultiLinePasteWarning": false,
+    "editor.fontSize": 16,
+    "markdown.preview.breaks": true,
+    "markdown-pdf.breaks": true,
+    "editor.minimap.enabled": false,
+    "C_Cpp.default.cppStandard": "c++17",
+    "C_Cpp.default.cStandard": "c17",
+    "C_Cpp.intelliSenseEngine": "disabled",
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
+    },
+    "haskell.manageHLS": "GHCup",
+    "cSpell.userWords": [
+        "dfsan"
+    ],
+    "editor.formatOnSave": true,
+}
