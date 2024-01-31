@@ -11,7 +11,7 @@ set-links: ## Set symbolic link
 	-@ ln -s ~/dotfiles/coc-settings.json ~/.config/nvim/coc-settings.json
 	-@ ln -s ~/dotfiles/wezterm.lua ~/.config/wezterm/wezterm.lua
 	-@ ln -s ~/dotfiles/cspell.json ~/.config/cspell/cspell.json
-	-@ ln -s ~/dotfiles/alacritty.yml ~/.config/alacritty/alacritty.yml
+	-@ ln -s ~/dotfiles/alacritty.toml ~/.config/alacritty/alacritty.toml
 	-@ ln -s ~/dotfiles/custom-words.txt ~/.local/share/cspell/custom-words.txt
 	-@ ln -s ~/dotfiles/.tmux.conf ~/.tmux.conf
 	-@ ln -s ~/dotfiles/i3-config ~/.config/i3/config
