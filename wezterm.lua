@@ -4,10 +4,9 @@ local act = wezterm.action
 return {
     use_ime = true,
     font = wezterm.font_with_fallback({
-        { family = "Cica" },
-        { family = "Cica", assume_emoji_presentation = true },
+        { family = "HackGen Console NF" },
     }),
-    font_size = 12.0,
+    font_size = 13.0,
     color_scheme = "Hybrid (terminal.sexy)",
     window_background_opacity=0.9,
     hide_tab_bar_if_only_one_tab = true,

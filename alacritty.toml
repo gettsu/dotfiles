@@ -1,16 +1,20 @@
 [font]
-size = 12.0
+size = 13.0
 
 [font.bold]
-family = "Cica"
+family = "HackGen Console NF"
 style = "Bold"
 
+[font.bold_italic]
+family = "HackGen Console NF"
+style = "Bold Italic"
+
 [font.italic]
-family = "Cica"
+family = "HackGen Console NF"
 style = "Italic"
 
 [font.normal]
-family = "Cica"
+family = "HackGen Console NF"
 style = "Regular"
 
 [window]

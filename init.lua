@@ -67,10 +67,6 @@ local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
         "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {}
     },
     {
-        "neoclide/coc.nvim",
-        branch = "release"
-    },
-    {
         "rebelot/kanagawa.nvim",
     },
     {
@@ -86,42 +82,7 @@ local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
     keymap("n", "<leader>g", ":lua require('fzf-lua').git_status()<CR>", {  silent = true })
     keymap("n", "<leader>r", ":lua require('fzf-lua').grep_project()<CR>", {  silent = true })
 
-    local coc_opts = {
-        silent = true,
-        noremap = true,
-        expr = true,
-    }
-
-    -- GoTo code navigation
-    keymap("n", "gd", "<Plug>(coc-definition)", {silent = true})
-    keymap("n", "gy", "<Plug>(coc-type-definition)", {silent = true})
-    keymap("n", "gi", "<Plug>(coc-implementation)", {silent = true})
-    keymap("n", "gr", "<Plug>(coc-references)", {silent = true})
-
     keymap("n", "<leader>b", "<C-o>", {  silent = true })
-
-    vim.keymap.set("i", "<Tab>",
-    function()
-        is_visible = vim.fn["coc#pum#visible"]()
-        if is_visible == 1 then
-            return vim.fn["coc#pum#confirm"]()
-        else
-            return "<Tab>"
-        end
-    end, coc_opts)
-
-    function _G.show_docs()
-        local cw = vim.fn.expand('<cword>')
-        if vim.fn.index({'vim', 'help'}, vim.bo.filetype) >= 0 then
-            vim.api.nvim_command('h ' .. cw)
-        elseif vim.api.nvim_eval('coc#rpc#ready()') then
-            vim.fn.CocActionAsync('doHover')
-        else
-            vim.api.nvim_command('!' .. vim.o.keywordprg .. ' ' .. cw)
-        end
-    end
-    keymap("n", "K", ':lua _G.show_docs()<CR>', {silent = true})
-
 
     vim.cmd "colorscheme kanagawa"
 
