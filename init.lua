@@ -1,4 +1,3 @@
---- Options ---
 local options = {
     title = true,
     clipboard = "unnamedplus",
@@ -43,27 +42,13 @@ local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
     vim.g.maplocalleader = " "
 
     -- Modes
-    --   normal_mode = 'n',
-    --   insert_mode = 'i',
-    --   visual_mode = 'v',
-    --   visual_block_mode = 'x',
-    --   term_mode = 't',
-    --   command_mode = 'c',
-
     keymap("n", "<Space>h", "^", opts)
     keymap("n", "<Space>l", "$", opts)
-
     -- 窓の切り替え --
     keymap("n", "<CR><CR>", "<C-w><C-w>", opts)
 
     require("lazy").setup({
     {
-        "iamcco/markdown-preview.nvim",
-        cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-        ft = { "markdown" },
-        build = function() vim.fn["mkdp#util#install"]() end,
-    },
-    { 
         "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {}
     },
     {
@@ -74,8 +59,26 @@ local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
         dependencies = { "nvim-tree/nvim-web-devicons" },
     },
     {
+        'williamboman/mason.nvim',
+    },
+    {
+        "williamboman/mason-lspconfig.nvim",
+    },
+    {
+        "tomasiser/vim-code-dark",
+    },
+    {
+        "nvimtools/none-ls.nvim",
+        dependencies = { "nvim-lua/plenary.nvim" },
+    },
+    {
         "nvim-treesitter/nvim-treesitter",
     },
+    {
+        "neovim/nvim-lspconfig",
+    },
+    {'hrsh7th/nvim-cmp'},         -- Required
+    {'hrsh7th/cmp-nvim-lsp'},     -- Required
     })
 
     keymap("n", "<leader>f", ":lua require('fzf-lua').files()<CR>", {  silent = true })
@@ -84,13 +87,30 @@ local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
     keymap("n", "<leader>b", "<C-o>", {  silent = true })
 
+    require'cmp'.setup {
+        sources = {
+            { name = 'nvim_lsp' }
+        }
+    }
+    local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+    local lspconfig = require('lspconfig')
+    lspconfig.clangd.setup({
+        capabilities = capabilities,
+        cmd = {'clangd-17', '--background-index', '--clang-tidy'},
+    })
+    vim.keymap.set('n', 'K',  '<cmd>lua vim.lsp.buf.hover()<CR>')
+    vim.keymap.set('n', 'gf', '<cmd>lua vim.lsp.buf.formatting()<CR>')
+    vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>')
+    vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
+    vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>')
+    vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
     vim.cmd "colorscheme kanagawa"
 
     local highlight = {
         "CursorColumn",
         "Whitespace",
     }
-
     require("ibl").setup {
         indent = { highlight = highlight, char = "" },
         whitespace = {
@@ -99,4 +119,37 @@ local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
         },
         scope = { enabled = false },
     }
+    require("mason").setup()
+    require("mason-lspconfig").setup()
+    require("mason-lspconfig").setup_handlers {
+      function (server_name) -- default handler (optional)
+        require("lspconfig")[server_name].setup {
+          on_attach = on_attach, --keyバインドなどの設定を登録
+          capabilities = capabilities, --cmpを連携
+        }
+      end,
+    }
+
+    local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+    local none_ls = require("null-ls")
+    none_ls.setup({
+        sources = {
+            none_ls.builtins.formatting.black,
+            none_ls.builtins.formatting.clang_format,
+        },
+        debug = false,
+        on_attach = function(client, bufnr)
+            if client.supports_method("textDocument/formatting") then
+                vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+                vim.api.nvim_create_autocmd("BufWritePre", {
+                    group = augroup,
+                    buffer = bufnr,
+                    callback = function()
+                        -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
+                        vim.lsp.buf.format({ async = false })
+                    end,
+                })
+            end
+        end,
+    })
 end
