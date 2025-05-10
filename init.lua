@@ -1,10 +1,10 @@
 local options = {
     title = true,
-    clipboard = "unnamedplus",
     number = true,
     shiftwidth = 4,
     tabstop = 4,
     expandtab = true,
+    clipboard = "unnamedplus",
     autoindent = true,
     termguicolors = true,
 }
@@ -19,6 +19,18 @@ end
 local opts = { noremap = true, silent = true }
 
 if not vim.g.vscode then
+
+vim.g.clipboard = {
+  name = 'OSC 52',
+  copy = {
+    ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+    ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+  },
+  paste = {
+    ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
+    ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
+  },
+}
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
     if not vim.loop.fs_stat(lazypath) then
@@ -59,10 +71,10 @@ local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
         dependencies = { "nvim-tree/nvim-web-devicons" },
     },
     {
-        'williamboman/mason.nvim',
+        'williamboman/mason.nvim', version = "^1.0.0",
     },
     {
-        "williamboman/mason-lspconfig.nvim",
+        "williamboman/mason-lspconfig.nvim", version = "^1.0.0",
     },
     {
         "tomasiser/vim-code-dark",
@@ -79,6 +91,9 @@ local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
     },
     {'hrsh7th/nvim-cmp'},         -- Required
     {'hrsh7th/cmp-nvim-lsp'},     -- Required
+    {
+        'vim-airline/vim-airline'
+    }
     })
 
     keymap("n", "<leader>f", ":lua require('fzf-lua').files()<CR>", {  silent = true })
@@ -87,24 +102,39 @@ local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
     keymap("n", "<leader>b", "<C-o>", {  silent = true })
 
-    require'cmp'.setup {
+    local cmp = require("cmp")
+    cmp.setup({
         sources = {
             { name = 'nvim_lsp' }
-        }
-    }
+        },
+        window = {
+          -- completion = cmp.config.window.bordered(),
+          -- documentation = cmp.config.window.bordered(),
+        },
+        mapping = cmp.mapping.preset.insert({
+            ["<C-p>"] = cmp.mapping.select_prev_item(),
+            ["<C-n>"] = cmp.mapping.select_next_item(),
+            ['<C-l>'] = cmp.mapping.complete(),
+            ['<C-e>'] = cmp.mapping.abort(),
+            ["<CR>"] = cmp.mapping.confirm { select = true },
+        }),
+    })
     local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
     local lspconfig = require('lspconfig')
-    lspconfig.clangd.setup({
-        capabilities = capabilities,
-        cmd = {'clangd-17', '--background-index', '--clang-tidy'},
-    })
+    if vim.fn.executable('clangd-17') == 1 then
+        lspconfig.clangd.setup({
+            capabilities = capabilities,
+            cmd = {'clangd-17', '--background-index', '--clang-tidy'},
+        })
+    end
     vim.keymap.set('n', 'K',  '<cmd>lua vim.lsp.buf.hover()<CR>')
     vim.keymap.set('n', 'gf', '<cmd>lua vim.lsp.buf.formatting()<CR>')
     vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>')
     vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
     vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>')
     vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
+    vim.keymap.set('n', 'gK', '<cmd>lua vim.diagnostic.open_float()<CR>')
     vim.cmd "colorscheme kanagawa"
 
     local highlight = {
@@ -139,7 +169,7 @@ local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
         },
         debug = false,
         on_attach = function(client, bufnr)
-            if client.supports_method("textDocument/formatting") then
+            if client:supports_method("textDocument/formatting") then
                 vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
                 vim.api.nvim_create_autocmd("BufWritePre", {
                     group = augroup,
@@ -153,3 +183,4 @@ local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
         end,
     })
 end
+
