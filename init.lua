@@ -104,6 +104,15 @@ if not vim.g.vscode then
     {
       "vim-airline/vim-airline",
     },
+    {
+      "github/copilot.vim",
+    },
+    {
+      "f-person/git-blame.nvim",
+    },
+    {
+      "airblade/vim-gitgutter",
+    },
   })
 
   keymap("n", "<leader>f", ":lua require('fzf-lua').files()<CR>", { silent = true })
@@ -136,6 +145,32 @@ if not vim.g.vscode then
     lspconfig.clangd.setup({
       capabilities = capabilities,
       cmd = { "clangd-17", "--background-index", "--clang-tidy" },
+    })
+  end
+  if vim.fn.executable("ruff") == 1 then
+    lspconfig.ruff.setup({})
+  end
+  if vim.fn.executable("pyright") == 1 then
+    require("lspconfig").pyright.setup({
+      capabilities = vim.lsp.protocol.make_client_capabilities(),
+      settings = {
+        python = {
+          analysis = {
+            typeCheckingMode = "off",
+            autoSearchPaths = true,
+            useLibraryCodeForTypes = true,
+            diagnosticMode = "off",
+            autoImportCompletions = false,
+          },
+          linting = {
+            enabled = false,
+          },
+        },
+      },
+      -- Disable all diagnostics from Pyright
+      handlers = {
+        ["textDocument/publishDiagnostics"] = function() end,
+      },
     })
   end
   vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>")
