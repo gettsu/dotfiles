@@ -99,6 +99,12 @@ if not vim.g.vscode then
     {
       "neovim/nvim-lspconfig",
     },
+    {
+      "hrsh7th/cmp-path",
+    },
+    {
+      "petertriho/nvim-scrollbar",
+    },
     { "hrsh7th/nvim-cmp" }, -- Required
     { "hrsh7th/cmp-nvim-lsp" }, -- Required
     {
@@ -121,10 +127,14 @@ if not vim.g.vscode then
 
   keymap("n", "<leader>b", "<C-o>", { silent = true })
 
+  local scrollbar = require("scrollbar")
+  scrollbar.setup()
+
   local cmp = require("cmp")
   cmp.setup({
     sources = {
       { name = "nvim_lsp" },
+      { name = "path" },
     },
     window = {
       -- completion = cmp.config.window.bordered(),
@@ -209,7 +219,6 @@ if not vim.g.vscode then
   local none_ls = require("null-ls")
   none_ls.setup({
     sources = {
-      none_ls.builtins.formatting.black,
       none_ls.builtins.formatting.clang_format,
       none_ls.builtins.formatting.stylua.with({
         extra_args = { "--indent-type", "Spaces", "--indent-width", 2 },
