@@ -216,7 +216,9 @@ if not vim.g.vscode then
   local none_ls = require("null-ls")
   none_ls.setup({
     sources = {
-      none_ls.builtins.formatting.clang_format,
+      none_ls.builtins.formatting.clang_format.with({
+        extra_args = { "--style", "{IndentWidth: 4, UseTab: Never, AllowShortFunctionsOnASingleLine: None}" },
+      }),
       none_ls.builtins.formatting.stylua.with({
         extra_args = { "--indent-type", "Spaces", "--indent-width", 2 },
       }),
