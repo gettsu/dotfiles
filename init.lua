@@ -150,18 +150,18 @@ if not vim.g.vscode then
   })
   local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-  local lspconfig = require("lspconfig")
-  if vim.fn.executable("clangd-17") == 1 then
-    lspconfig.clangd.setup({
+  if vim.fn.executable("clangd") == 1 then
+    vim.lsp.config.clangd = {
       capabilities = capabilities,
-      cmd = { "clangd-17", "--background-index", "--clang-tidy" },
-    })
+      cmd = { "clangd", "--background-index", "--clang-tidy" },
+    }
+    vim.lsp.enable("clangd")
   end
   if vim.fn.executable("ruff") == 1 then
-    lspconfig.ruff.setup({})
+    vim.lsp.enable("ruff")
   end
   if vim.fn.executable("pyright") == 1 then
-    require("lspconfig").pyright.setup({
+    vim.lsp.config.pyright = {
       capabilities = vim.lsp.protocol.make_client_capabilities(),
       settings = {
         python = {
@@ -181,7 +181,8 @@ if not vim.g.vscode then
       handlers = {
         ["textDocument/publishDiagnostics"] = function() end,
       },
-    })
+    }
+    vim.lsp.enable("pyright")
   end
   vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>")
   vim.keymap.set("n", "gf", "<cmd>lua vim.lsp.buf.formatting()<CR>")
@@ -206,13 +207,9 @@ if not vim.g.vscode then
   })
   require("mason").setup()
   require("mason-lspconfig").setup()
-  require("mason-lspconfig").setup_handlers({
-    function(server_name) -- default handler (optional)
-      require("lspconfig")[server_name].setup({
-        on_attach = on_attach, --keyバインドなどの設定を登録
-        capabilities = capabilities, --cmpを連携
-      })
-    end,
+
+  vim.lsp.config("*", {
+    capabilities = capabilities,
   })
 
   local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
