@@ -119,11 +119,22 @@ if not vim.g.vscode then
     {
       "airblade/vim-gitgutter",
     },
+    {
+      "romgrk/barbar.nvim",
+      dependencies = {
+        "lewis6991/gitsigns.nvim", -- OPTIONAL: for git status
+        "nvim-tree/nvim-web-devicons", -- OPTIONAL: for file icons
+      },
+      init = function()
+        vim.g.barbar_auto_setup = false
+      end,
+    },
   })
 
   keymap("n", "<leader>f", ":lua require('fzf-lua').files()<CR>", { silent = true })
   keymap("n", "<leader>g", ":lua require('fzf-lua').git_status()<CR>", { silent = true })
   keymap("n", "<leader>r", ":lua require('fzf-lua').grep_project()<CR>", { silent = true })
+  keymap("n", "<leader>l", ":lua require('fzf-lua').buffers()<CR>", { silent = true })
 
   keymap("n", "<leader>b", "<C-o>", { silent = true })
 
@@ -238,4 +249,5 @@ if not vim.g.vscode then
       end
     end,
   })
+  require("barbar").setup({})
 end
