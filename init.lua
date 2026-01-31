@@ -10,6 +10,7 @@ local options = {
 }
 
 vim.opt.shortmess:append("c")
+vim.opt.shada = ""
 vim.opt.list = true
 vim.opt.listchars:append("eol:↴")
 for k, v in pairs(options) do
@@ -129,6 +130,12 @@ if not vim.g.vscode then
         vim.g.barbar_auto_setup = false
       end,
     },
+    {
+      "folke/tokyonight.nvim",
+      lazy = false,
+      priority = 1000,
+      opts = {},
+    }
   })
 
   keymap("n", "<leader>f", ":lua require('fzf-lua').files()<CR>", { silent = true })
@@ -202,7 +209,7 @@ if not vim.g.vscode then
   vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>")
   vim.keymap.set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>")
   vim.keymap.set("n", "gK", "<cmd>lua vim.diagnostic.open_float()<CR>")
-  vim.cmd("colorscheme kanagawa")
+  vim.cmd("colorscheme tokyonight")
 
   local highlight = {
     "CursorColumn",
