@@ -172,6 +172,7 @@ if not vim.g.vscode then
     vim.lsp.config.clangd = {
       capabilities = capabilities,
       cmd = { "clangd", "--background-index", "--clang-tidy" },
+      filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto" }, 
     }
     vim.lsp.enable("clangd")
   end
@@ -236,9 +237,6 @@ if not vim.g.vscode then
     sources = {
       none_ls.builtins.formatting.clang_format.with({
         extra_args = { "--style", "{IndentWidth: 4, UseTab: Never, AllowShortFunctionsOnASingleLine: None}" },
-      }),
-      none_ls.builtins.formatting.stylua.with({
-        extra_args = { "--indent-type", "Spaces", "--indent-width", 2 },
       }),
     },
     debug = false,
