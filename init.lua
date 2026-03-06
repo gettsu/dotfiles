@@ -236,7 +236,9 @@ if not vim.g.vscode then
   none_ls.setup({
     sources = {
       none_ls.builtins.formatting.clang_format.with({
-        extra_args = { "--style", "{IndentWidth: 4, UseTab: Never, AllowShortFunctionsOnASingleLine: None}" },
+        extra_args = {
+            "--style=file",
+            "--fallback-style={IndentWidth: 4, UseTab: Never, AllowShortFunctionsOnASingleLine: None}",
       }),
     },
     debug = false,
