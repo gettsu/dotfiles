@@ -239,6 +239,7 @@ if not vim.g.vscode then
         extra_args = {
             "--style=file",
             "--fallback-style={IndentWidth: 4, UseTab: Never, AllowShortFunctionsOnASingleLine: None}",
+        },
       }),
     },
     debug = false,
