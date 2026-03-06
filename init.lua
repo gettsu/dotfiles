@@ -171,7 +171,7 @@ if not vim.g.vscode then
   if vim.fn.executable("clangd") == 1 then
     vim.lsp.config.clangd = {
       capabilities = capabilities,
-      cmd = { "clangd", "--background-index", "--clang-tidy" },
+      cmd = { "clangd", "--background-index", "--clang-tidy", "--fallback-style=WebKit"},
       filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto" }, 
     }
     vim.lsp.enable("clangd")
@@ -234,27 +234,24 @@ if not vim.g.vscode then
   local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
   local none_ls = require("null-ls")
   none_ls.setup({
-    sources = {
-      none_ls.builtins.formatting.clang_format.with({
-        extra_args = {
-            "--style=file",
-            "--fallback-style={IndentWidth: 4, UseTab: Never, AllowShortFunctionsOnASingleLine: None}",
-        },
-      }),
-    },
+    sources = {},
     debug = false,
-    on_attach = function(client, bufnr)
-      if client:supports_method("textDocument/formatting") then
-        vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-        vim.api.nvim_create_autocmd("BufWritePre", {
-          group = augroup,
-          buffer = bufnr,
-          callback = function()
-            -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
-            vim.lsp.buf.format({ async = false })
-          end,
-        })
-      end
+  })
+
+  vim.api.nvim_create_autocmd("LspAttach", {
+    group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+    callback = function(ev)
+        local client = vim.lsp.get_client_by_id(ev.data.client_id)
+        if client and client.supports_method("textDocument/formatting") then
+            vim.api.nvim_clear_autocmds({ group = augroup, buffer = ev.buf })
+            vim.api.nvim_create_autocmd("BufWritePre", {
+                group = augroup,
+                buffer = ev.buf,
+                callback = function()
+                    vim.lsp.buf.format({ bufnr = ev.buf })
+                end,
+            })
+        end
     end,
   })
   require("barbar").setup({})
