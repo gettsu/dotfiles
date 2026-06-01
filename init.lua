@@ -258,4 +258,7 @@ if not vim.g.vscode then
     end,
   })
   require("barbar").setup({})
+  require('gitblame').setup {
+    message_template = '<summary> • <date> • <author>  • <sha>'
+  }
 end
