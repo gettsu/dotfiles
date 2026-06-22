@@ -135,6 +135,10 @@ if not vim.g.vscode then
       lazy = false,
       priority = 1000,
       opts = {},
+    },
+    {
+      "esmuellert/codediff.nvim",
+      cmd = "CodeDiff",
     }
   })
 
@@ -175,9 +179,6 @@ if not vim.g.vscode then
       filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto" }, 
     }
     vim.lsp.enable("clangd")
-  end
-  if vim.fn.executable("ruff") == 1 then
-    vim.lsp.enable("ruff")
   end
   if vim.fn.executable("pyright") == 1 then
     vim.lsp.config.pyright = {
