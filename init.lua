@@ -159,12 +159,7 @@ require("lazy").setup({
       if vim.fn.executable("clang-format") == 1 then
         table.insert(
           sources,
-          none_ls.builtins.formatting.clang_format.with({
-            extra_args = {
-              "--style",
-              "{IndentWidth: 4, UseTab: Never, AllowShortFunctionsOnASingleLine: None}",
-            },
-          })
+          none_ls.builtins.formatting.clang_format,
         )
       end
 
