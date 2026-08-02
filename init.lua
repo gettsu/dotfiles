@@ -180,6 +180,18 @@ if not vim.g.vscode then
     }
     vim.lsp.enable("clangd")
   end
+  if vim.fn.executable("rust-analyzer") == 1 then
+    vim.lsp.config["rust-analyzer"] = {
+      cmd = { "rust-analyzer" },
+      filetypes = { "rust" },
+      root_markers = { "Cargo.toml", "rust-project.json", ".git" },
+    }
+
+    vim.lsp.enable("rust-analyzer")
+  end
+  if vim.fn.executable("ruff") == 1 then
+    vim.lsp.enable("ruff")
+  end
   if vim.fn.executable("pyright") == 1 then
     vim.lsp.config.pyright = {
       capabilities = vim.lsp.protocol.make_client_capabilities(),
