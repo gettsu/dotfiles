@@ -157,10 +157,7 @@ require("lazy").setup({
       local sources = {}
 
       if vim.fn.executable("clang-format") == 1 then
-        table.insert(
-          sources,
-          none_ls.builtins.formatting.clang_format,
-        )
+        table.insert(sources, none_ls.builtins.formatting.clang_format)
       end
 
       if vim.fn.executable("stylua") == 1 then
